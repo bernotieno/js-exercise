@@ -1,5 +1,5 @@
 const escapeStr = '`\\/"\'';
-const arr = Object.freeze([4,2]);
+const arr = Object.freeze([4,'2']);
 const obj = Object.freeze({
 
     str: 'declaration string',
