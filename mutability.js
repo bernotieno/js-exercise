@@ -3,4 +3,4 @@ const clone2 = JSON.parse(JSON.stringify(person));
 const samePerson = person
 
 person.age += 1;
-person.country = 'Canada';
+person.country = 'FR';
