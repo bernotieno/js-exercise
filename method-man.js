@@ -1,13 +1,13 @@
 function words(str) {
-    return input.split(' ')
+    return str.split(' ')
 }
 
 function sentence(arr) {
-    return input.join(' ')
+    return arr.join(' ')
 }
 
 function yell(str) {
-    return input.toUpperCase()
+    return str.toUpperCase()
 }
 
 function whisper(str) {
