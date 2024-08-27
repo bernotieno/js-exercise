@@ -1,7 +1,5 @@
 const is = {}
 
-is.num = (str) => typeof str === 'number'
-is.nan = (str) => typeof str === ''
 is.num = (value) => typeof value === 'number' && !isNaN(value);
 is.nan = (value) => typeof value === 'number' && isNaN(value);
 is.str = (value) => typeof value === 'string';
