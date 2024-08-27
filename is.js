@@ -9,5 +9,5 @@ is.def = (value) =>  value !== undefined;
 is.arr = (value) => Array.isArray(value);
 is.obj = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 is.fun = (value) => typeof value === 'function';
-is.truthy = Boolean(value) === true;
-is.falsy = Boolean(value) === false;
+is.truthy = (value) => Boolean(value) === true;
+is.falsy = (value) => Boolean(value) === false;
