@@ -1,11 +1,13 @@
 function multiply(a, b) {
     let result = 0;
+    let positiveA = Math.abs(a);
+    let positiveB = Math.abs(b);
 
-    for (let i = 0; i < b; i++) {
-        result += a;
+    for (let i = 0; i < positiveB; i++) {
+        result += positiveA;
     }
 
-    return b < 0 ? -result : result;
+    return (a < 0) !== (b < 0) ? -result : result;
 }
 
 function divide(a, b) {
@@ -14,9 +16,11 @@ function divide(a, b) {
     }
 
     let quotient = 0;
+    let dividend = Math.abs(a);
+    const divisor = Math.abs(b);
 
-    while (a >= b) {
-        a -= b;
+    while (dividend >= divisor) {
+        dividend -= divisor;
         quotient++;
     }
 
@@ -28,9 +32,12 @@ function modulo(a, b) {
         throw new Error('Division by zero');
     }
 
-    while (a >= b) {
-        a -= b;
+    let dividend = Math.abs(a);
+    const divisor = Math.abs(b);
+
+    while (dividend >= divisor) {
+        dividend -= divisor;
     }
 
-    return a < 0 ? -a : a;
+    return a < 0 ? -dividend : dividend;
 }
