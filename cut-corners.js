@@ -27,7 +27,7 @@ function round(num) {
 }
 
 function ceil(num) {
-    intPart = integerPart(num);
+    let intPart = integerPart(num);
     return num > intPart ? intPart + 1 : intPart;
 }
 
