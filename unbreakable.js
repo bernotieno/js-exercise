@@ -1,12 +1,13 @@
 function split(str, delimiter) {
     let result = [];
     let current = '';
+    let delimLength = delimiter.length;
 
     for (let i = 0; i < str.length; i++) {
-        if (str.substring(i, i + delimiter.length) === delimiter) {
+        if (str.slice(i, i + delimLength) === delimiter) {
             result.push(current);
             current = '';
-            i += delimiter.length - 1; 
+            i += delimLength - 1; 
         } else {
             current += str[i];
         }
