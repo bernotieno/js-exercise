@@ -1,7 +1,7 @@
 function split(str, delimiter) {
     let result = [];
     let current = '';
-    let delimLength = delimiter.length;
+    const delimLength = delimiter.length;
 
     for (let i = 0; i < str.length; i++) {
         if (str.slice(i, i + delimLength) === delimiter) {
@@ -16,6 +16,7 @@ function split(str, delimiter) {
     result.push(current); 
     return result;
 }
+
 
 function join(arr, separator) {
     let result = '';
