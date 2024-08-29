@@ -44,8 +44,14 @@ function floor(num) {
         integerPart += 1;
     }
 
+  
+    if (sign === -1 && num > 0) {
+        integerPart += 1;
+    }
+
     return integerPart * sign;
 }
+
 
 function trunc(num) {
     const sign = num < 0 ? -1 : 1;
