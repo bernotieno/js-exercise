@@ -1,78 +1,41 @@
+function integerPart(num) {
+    let sign = num >= 0 ? 1 : -1;
+    num = Math.abs(num);
+    let result = 0;
+    let place = 1;
+     while (place <= num) {
+        place *=10
+     }
+     place /= 10;
+
+     while (place >= 1) {
+        while (result + place <= num) {
+            result += place;
+        }
+        place /= 10
+     }
+     return result * sign;
+}
+
 function round(num) {
-    const sign = num < 0 ? -1 : 1;
-    num = num * sign; // Work with the absolute value
-
-    // Determine the integer part by continuously subtracting 1
-    let integerPart = 0;
-    while (num >= 1) {
-        num -= 1;
-        integerPart += 1;
+    let beforeDecPart = integerPart(num);
+    let afterDecPart = num - beforeDecPart;
+    if (Math.abs(afterDecPart) >= 0.5) {
+        return beforeDecPart + (num>=0 ? 1 : -1);
     }
-    if (sign === 1 && num > 0) {
-        integerPart += 1;
-    }
-
-    // Check if the remaining fractional part is 0.5 or more
-    if (num >= 0.5) {
-        integerPart += 1;
-    }
-
-    return integerPart * sign;
+    return beforeDecPart;
 }
 
 function ceil(num) {
-    const sign = num < 0 ? -1 : 1;
-    num = num * sign; // Work with the absolute value
-
-    let integerPart = 0;
-    while (num > 1) {
-        num -= 1;
-        integerPart += 1;
-    }
-
-    if (sign === 1 && num > 0) {
-        integerPart += 1;
-    }
-
-    if (num > 0) {
-        integerPart += 1;
-    }
-
-    return integerPart * sign;
+    intPart = integerPart(num);
+    return num > intPart ? intPart + 1 : intPart;
 }
 
 function floor(num) {
-    const sign = num < 0 ? -1 : 1;
-    num = num * sign; // Work with the absolute value
-
-    let integerPart = 0;
-    while (num >= 1) {
-        num -= 1;
-        integerPart += 1;
-    }
-
-  
-    if (sign === -1 && num > 0) {
-        integerPart += 1;
-    }
-
-    return integerPart * sign;
+    let intPart = integerPart(num);
+    return num < intPart ? intPart - 1 : intPart;
 }
-
 
 function trunc(num) {
-    const sign = num < 0 ? -1 : 1;
-    num = num * sign; // Work with the absolute value
-
-    let integerPart = 0;
-    while (num >= 1) {
-        num -= 1;
-        integerPart += 1;
-    }
-
-    if (sign === 1 && num > 0) {
-        integerPart += 1;
-    }
-
-    return integerPart * sign;
-}
+    return integerPart(num)
+} 
