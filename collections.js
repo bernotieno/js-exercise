@@ -63,6 +63,9 @@ function strToObj(str) {
     }, {});
 }
 
+//Convert the first letter to uppercase
+const toCapital = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+
 // Determine the specific type of a variable
 function superTypeOf(value) {
     if (value === null) return 'null';
@@ -70,7 +73,6 @@ function superTypeOf(value) {
     if (Array.isArray(value)) return 'Array';
     if (value instanceof Set) return 'Set';
     if (value instanceof Map) return 'Map';
-    if (typeof value === 'string') return 'String';
-    if (typeof value === 'number') return 'Number';
-    return typeof value === 'object' ? 'Object' : typeof value;
+    if (typeof value === 'object') return 'Object'
+    return toCapital(typeof value)
 }
