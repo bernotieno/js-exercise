@@ -71,5 +71,6 @@ function superTypeOf(value) {
     if (value instanceof Set) return 'Set';
     if (value instanceof Map) return 'Map';
     if (typeof value === 'string') return 'String';
+    if (typeof value === 'number') return 'Number';
     return typeof value === 'object' ? 'Object' : typeof value;
 }
