@@ -8,6 +8,9 @@ function round(num) {
         num -= 1;
         integerPart += 1;
     }
+    if (sign === 1 && num > 0) {
+        integerPart += 1;
+    }
 
     // Check if the remaining fractional part is 0.5 or more
     if (num >= 0.5) {
@@ -24,6 +27,10 @@ function ceil(num) {
     let integerPart = 0;
     while (num > 1) {
         num -= 1;
+        integerPart += 1;
+    }
+
+    if (sign === 1 && num > 0) {
         integerPart += 1;
     }
 
@@ -60,6 +67,10 @@ function trunc(num) {
     let integerPart = 0;
     while (num >= 1) {
         num -= 1;
+        integerPart += 1;
+    }
+
+    if (sign === 1 && num > 0) {
         integerPart += 1;
     }
 
