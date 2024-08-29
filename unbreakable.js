@@ -1,32 +1,31 @@
-function split(str, delimiter) {
-    let result = [];
-    let current = '';
-    const delimLength = delimiter.length;
+function split(str, sep) {
+    if (sep === '') return Array.from(str);
+    const result = [];
+    let start = 0;
+    let i;
 
-    for (let i = 0; i < str.length; i++) {
-        if (str.slice(i, i + delimLength) === delimiter) {
-            result.push(current);
-            current = '';
-            i += delimLength - 1; 
-        } else {
-            current += str[i];
-        }
+    while((i = str.indexOf(sep, start)) !== -1) {
+        result.push(str.substring(start, i));
+        start = i + sep.length;
     }
-
-    result.push(current); 
+    result.push(str.substring(start));
+    if (result.length === 0 && str.startsWith(sep)) {
+        result.push
+    }
     return result;
 }
 
-
-function join(arr, separator) {
-    let result = '';
-
-    for (let i = 0; i < arr.length; i++) {
-        if (i > 0) {
-            result += separator;
-        }
-        result += arr[i];
+function join(arr, delimeter) {
+    if (!Array.isArray(arr)) {
+        return arr
     }
 
-    return result;
+    let answer = ''
+    for (let i = 0; i < arr.length; i++) {
+        answer += arr[i]
+        if (i < arr.length-1) {
+            answer += delimeter
+        }
+    }
+    return answer
 }
