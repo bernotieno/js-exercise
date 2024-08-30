@@ -1,7 +1,7 @@
 function letterSpaceNumber(str) {
     const result = [];
 
-    const regex = /([a-zA-Z]) (\d)(?=\D|$)/g;
+    const regex = /([a-zA-Z]) (\d)(?!\w)/g;
     let match;
 
     while ((match = regex.exec(str)) !== null) {
@@ -11,4 +11,3 @@ function letterSpaceNumber(str) {
     return result;
 }
 
-console.log(letterSpaceNumber('example 1, example 20')); // Output: ['e 1']
