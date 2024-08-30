@@ -1,13 +1,6 @@
-function ionOut(str) {
-    // Split the string into words based on non-word characters
-    const words = str.split(/\W+/);
-
-    // Filter words that contain 'ion' and follow a 't'
-    const result = words.filter(word => 
-        word.includes('ion') && word.startsWith('t')
-    ).map(word => 
-        word.replace('ion', '')
-    );
-
-    return result;
+function ionOut(s) {
+    const regex = /\b(\w+t)ion\b/g;
+    
+    // Use match with the regex and map the results
+    return (s.match(regex) || []).map(word => word.slice(0, -3));
 }
