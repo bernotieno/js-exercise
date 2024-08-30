@@ -4,11 +4,12 @@ function pyramid(char, height) {
    for (let i = 0 ; i < height;i++) {
     let spaces = ' '.repeat((height -i-1)*char.length);
     let str = char.repeat(i*2+1);
-    if (i !== char-1) {
-        result += spaces + char + '\n';
+    if (i !== height-1) {
+        result += spaces + str + '\n';
     }else {
-        result += spaces + char
+        result += spaces + str
     }
    }
     return result;
 }
+console.log(pyramid("{}",12))
