@@ -1,16 +1,14 @@
 function pyramid(char, height) {
     let result = '';
-
-    for (let i = 1; i <= height; i++) {
-        const spaces = ' '.repeat(height - i);
-        const chars = char.repeat(2 * i - 1);
-        
-        result += spaces + chars;
-        
-        if (i < height) {
-            result += '\n';
-        }
+    
+   for (let i = 0 ; i < height;i++) {
+    let spaces = ' '.repeat((height -i-1)*char.length);
+    let str = char.repeat(i*2+1);
+    if (i !== char-1) {
+        result += spaces + char + '\n';
+    }else {
+        result += spaces + char
     }
-
+   }
     return result;
 }
