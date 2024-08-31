@@ -13,7 +13,7 @@ function getURL(dataSet) {
   
   
   function notSoGreedy(dataSet) {
-    const urlPattern = /(https?:\/\/[^\s?]+\?([^&=]+=[^&=]*&){1,2}[^&=]+=[^&=]*)/g;
+    const urlPattern = /(https?:\/\/[^\s?]+(\?([^&=\s]+=[^&=\s]*&){1,2}[^&=\s]+=[^&=\s]*))/g;
     return (dataSet.match(urlPattern) || []).filter(url => {
       const queryCount = (url.match(/&/g) || []).length;
       return queryCount >= 1 && queryCount <= 2;
