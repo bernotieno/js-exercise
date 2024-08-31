@@ -4,8 +4,8 @@ function getURL(dataSet) {
   }
   
   function greedyQuery(dataSet) {
-    const urlPattern = /(https?:\/\/[^\s?]+\?([^&=]+=[^&=]*&){2,}[^&=]+=[^&=]*)/g;
-    return (dataSet.match(urlPattern) || []).map(url => url.trim()).filter(url => {
+    const urlPattern = /(https?:\/\/[^\s?]+(\?([^&=\s]+=[^&=\s]*&){2,}[^&=\s]+=[^&=\s]*))/g;
+    return (dataSet.match(urlPattern) || []).filter(url => {
       const queryCount = (url.match(/&/g) || []).length;
       return queryCount >= 2;
     });
