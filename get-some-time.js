@@ -24,7 +24,7 @@ function weekDays(date) {
   
   // Helper function to format the date as dd-mm-yyyy
   function formattedDate(date) {
-    let month = String(dateate.getMonth() + 1).padStart(2, '0');
+    let month = String(date.getMonth() + 1).padStart(2, '0');
     let day = String(date.getDate() - 1).padStart(2, '0');
     let year = String(date.getFullYear()).padStart(4, '0');
     return `${day}-${month}-${year}`;
