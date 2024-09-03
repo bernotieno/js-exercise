@@ -5,28 +5,29 @@ function firstDayWeek(weekNumber, year) {
     }
   
     // Create a Date object for January 1st of the given year
-    const firstDayOfYear = new Date(parseInt(year), 0, 1);
-    
+    const firstDayOfYear = new Date(year, 0, 1);
+  
     // Get the day of the week for January 1st (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const firstDayOfWeek = firstDayOfYear.getDay();
   
-    // If the first week is requested, return January 1st
-    if (weekNumber === 1) {
-      return formatDate(firstDayOfYear);
-    }
-    
     // Calculate the date of the first Monday of the year
     const daysToAdd = (firstDayOfWeek === 0 ? 1 : 8 - firstDayOfWeek);
     const firstMonday = new Date(firstDayOfYear);
     firstMonday.setDate(firstMonday.getDate() + daysToAdd);
-    
-    // Add the necessary weeks
+  
+    // Adjust week number calculation to handle years before 1900
     const targetDate = new Date(firstMonday);
-    targetDate.setDate(targetDate.getDate() + (weekNumber - 2) * 7);
-    
+    targetDate.setDate(targetDate.getDate() + (weekNumber - 1) * 7);
+  
+    // Handle case where target date is in the previous year
+    if (targetDate < firstDayOfYear) {
+      return formatDate(firstDayOfYear);
+    }
+  
     // Format and return the date
     return formatDate(targetDate);
   }
+  
   
   
   // Helper function to format the date as dd-mm-yyyy
