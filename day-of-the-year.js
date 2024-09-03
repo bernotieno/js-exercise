@@ -4,7 +4,7 @@ function dayOfTheYear(date) {
     const month = date.getMonth();
     const day = date.getDate();
 
-    const isLeapYeah = (year% 4 === 0 && year%100 != 0) || (yeah%400 == 0);
+    const isLeapYeah = (year% 4 === 0 && year%100 != 0) || (year%400 == 0);
     if (isLeapYeah) {
         monthDays[1] = 29;
     }
