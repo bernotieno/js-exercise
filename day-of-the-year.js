@@ -1,10 +1,18 @@
 function dayOfTheYear(date) {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    
-    const diff = date.getTime() - firstDayOfYear.getTime();
-    
-    const dayNumber = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
-    
+    const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    const isLeapYeah = (year% 4 === 0 && year%100 != 0) || (yeah%400 == 0);
+    if (isLeapYeah) {
+        monthDays[1] = 29;
+    }
+
+    let dayNumber = day;
+    for (let i = 0; i < month; i++) {
+        dayNumber += monthDays[i];
+    }
     return dayNumber;
   }
 
