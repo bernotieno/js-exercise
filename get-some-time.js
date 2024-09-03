@@ -21,20 +21,19 @@ function firstDayWeek(weekNumber, year) {
   
     // Handle case where target date is in the previous year
     if (targetDate < firstDayOfYear) {
-      return formatDate(firstDayOfYear);
+      return formattedDate(firstDayOfYear);
     }
   
     // Format and return the date
-    return formatDate(targetDate);
+    return formattedDate(targetDate);
   }
   
   
   
   // Helper function to format the date as dd-mm-yyyy
-  function formatDate(date) {
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
-    const year = date.getFullYear();
+  function formattedDate(date) {
+    let month = String(dateate.getMonth() + 1).padStart(2, '0');
+    let day = String(date.getDate() - 1).padStart(2, '0');
+    let year = String(date.getFullYear()).padStart(4, '0');
     return `${day}-${month}-${year}`;
-  }
-  
+}
