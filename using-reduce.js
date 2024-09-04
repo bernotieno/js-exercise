@@ -4,7 +4,7 @@ const adder = (arr, initialValue = 0) => {
   };
   
   // SumOrMul function
-  const sumOrMul = (arr, initialValue = 1) => {
+  const sumOrMul = (arr, initialValue = 0) => {
     return arr.reduce((acc, curr) => {
       return curr % 2 === 0 ? acc * curr : acc + curr;
     }, initialValue);
