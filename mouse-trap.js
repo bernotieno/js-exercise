@@ -2,8 +2,6 @@ const circleSize = 50;
 const circleRadius = circleSize / 2;
 let activeCircle = null;
 let isDragging = false;
-let offsetX = 0;
-let offsetY = 0;
 
 // Function to create a circle at the mouse click position
 export function createCircle(e) {
@@ -17,12 +15,8 @@ export function createCircle(e) {
 
   document.body.appendChild(circle);
 
-  circle.addEventListener('mousedown', (ev) => {
-    activeCircle = circle;
-    offsetX = ev.clientX - circle.getBoundingClientRect().left;
-    offsetY = ev.clientY - circle.getBoundingClientRect().top;
-    isDragging = true;
-  });
+  activeCircle = circle;
+  isDragging = true;
 }
 
 // Function to move the last created circle with the mouse
@@ -31,8 +25,8 @@ export function moveCircle(e) {
   const boxRect = box.getBoundingClientRect();
 
   if (activeCircle) {
-    let newX = e.clientX - offsetX;
-    let newY = e.clientY - offsetY;
+    let newX = e.clientX - circleRadius;
+    let newY = e.clientY - circleRadius;
 
     // Restrict movement if the circle is inside the box
     if (isInsideBox(activeCircle, boxRect)) {
