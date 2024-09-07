@@ -1,4 +1,4 @@
-export function pick() {
+function pick() {
     const body = document.body;
     const hslDiv = document.querySelector('.hsl');
     const hueDiv = document.querySelector('.hue');
