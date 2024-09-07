@@ -1,47 +1,71 @@
 function pick() {
     const body = document.body;
-    const hslDiv = document.querySelector('.hsl');
-    const hueDiv = document.querySelector('.hue');
-    const luminosityDiv = document.querySelector('.luminosity');
-    const axisX = document.getElementById('axisX');
-    const axisY = document.getElementById('axisY');
+    const hslDiv = document.createElement('div');
+    hslDiv.className = 'hsl';
+    body.appendChild(hslDiv);
+
+    const hueDiv = document.createElement('div');
+    hueDiv.className = 'hue text';
+    body.appendChild(hueDiv);
+
+    const luminosityDiv = document.createElement('div');
+    luminosityDiv.className = 'luminosity text';
+    body.appendChild(luminosityDiv);
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.style.position = 'fixed';
+    svg.style.top = '0';
+    svg.style.left = '0';
+    svg.style.width = '100%';
+    svg.style.height = '100%';
+    svg.style.pointerEvents = 'none';
+    body.appendChild(svg);
+
+    const axisX = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    axisX.id = 'axisX';
+    axisX.setAttribute('stroke', 'black');
+    svg.appendChild(axisX);
+
+    const axisY = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    axisY.id = 'axisY';
+    axisY.setAttribute('stroke', 'black');
+    svg.appendChild(axisY);
 
     function updateColor(event) {
         const x = event.clientX;
         const y = event.clientY;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-        const hue = Math.round((x / window.innerWidth) * 360);
-        const luminosity = Math.round((1 - y / window.innerHeight) * 100);
-        const hsl = `hsl(${hue}, 50%, ${luminosity}%)`;
+        const hue = Math.round((x / width) * 360);
+        const luminosity = Math.round((y / height) * 100);
 
-        // Update body background
-        body.style.background = hsl;
+        const hslValue = `hsl(${hue}, 50%, ${luminosity}%)`;
 
-        // Update display values
-        hslDiv.textContent = hsl;
+        body.style.background = hslValue;
+        hslDiv.textContent = hslValue;
         hueDiv.textContent = `hue\n${hue}`;
         luminosityDiv.textContent = `luminosity\n${luminosity}`;
 
-        // Update axis positions
         axisX.setAttribute('x1', x);
         axisX.setAttribute('x2', x);
+        axisX.setAttribute('y1', 0);
+        axisX.setAttribute('y2', '100%');
+
+        axisY.setAttribute('x1', 0);
+        axisY.setAttribute('x2', '100%');
         axisY.setAttribute('y1', y);
         axisY.setAttribute('y2', y);
     }
 
-    function copyToClipboard() {
+    body.addEventListener('mousemove', updateColor);
+
+    body.addEventListener('click', () => {
         const hslValue = hslDiv.textContent;
         navigator.clipboard.writeText(hslValue).then(() => {
             console.log('HSL value copied to clipboard');
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
         });
-    }
-
-    // Event listeners
-    body.addEventListener('mousemove', updateColor);
-    body.addEventListener('click', copyToClipboard);
+    });
 }
 
-// Initialize the color picker
-pick();
+export {pick}
