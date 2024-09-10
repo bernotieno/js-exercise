@@ -30,7 +30,7 @@ function fusion(obj1, obj2) {
         if (Array.isArray(val1)) {
             result[key] = [...val1, ...val2];
         } else if (typeof val1 === 'string') {
-            result[key] = `${val1} ${val2}`.trim();
+            result[key] = val1 && val2 ? `${val1} ${val2}` : val1 || val2;
         } else if (typeof val1 === 'number') {
             result[key] = val1 + val2;
         } else if (typeof val1 === 'object') {
