@@ -11,7 +11,17 @@ const filterValues = (obj, callback) => {
   };
   
   const reduceValues = (obj, callback, initialValue) => {
-    return Object.values(obj).reduce(callback, initialValue);
+    const values = Object.values(obj);
+    
+    if (initialValue === undefined && values.length === 0) {
+      throw new TypeError('Reduce of empty object with no initial value');
+    }
+    
+    if (initialValue === undefined) {
+      return values.slice(1).reduce(callback, values[0]);
+    }
+    
+    return values.reduce(callback, initialValue);
   };
 
   // const nutrients = { carbohydrates: 12, protein: 20, fat: 5 }
