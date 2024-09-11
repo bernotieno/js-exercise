@@ -33,7 +33,7 @@ const filterEntries = (obj, predicate) => {
   const cartTotal = (cart) => {
     return mapEntries(cart, ([item, grams]) => {
       const itemStats = Object.entries(nutritionDB[item]).reduce((acc, [stat, value]) => {
-        acc[stat] = +(value * grams / 100).toFixed(2);
+        acc[stat] = Number((value * grams / 100).toFixed(3)); 
         return acc;
       }, {});
       return [item, itemStats];
