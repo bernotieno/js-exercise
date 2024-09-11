@@ -1,43 +1,42 @@
- const filterEntries = (entries, predicate) => {
-    return entries.filter(entry => predicate(entry));
+const filterEntries = (obj, predicate) => {
+    const entries = Object.entries(obj);
+    const filteredEntries = entries.filter(entry => predicate(entry));
+    return Object.fromEntries(filteredEntries);
   };
   
-  const mapEntries = (entries, mapper) => {
-    return entries.map(entry => mapper(entry));
+  const mapEntries = (obj, mapper) => {
+    const entries = Object.entries(obj);
+    const mappedEntries = entries.map(entry => mapper(entry));
+    return Object.fromEntries(mappedEntries);
   };
   
-  const reduceEntries = (entries, reducer, initialValue) => {
+  const reduceEntries = (obj, reducer, initialValue) => {
+    const entries = Object.entries(obj);
     return entries.reduce((acc, entry) => reducer(acc, entry), initialValue);
   };
   
   
   const totalCalories = (cart) => {
-    const entries = Object.entries(cart);
-    return reduceEntries(entries, (total, [item, grams]) => {
+    return reduceEntries(cart, (total, [item, grams]) => {
       return total + (nutritionDB[item].calories * grams / 100);
     }, 0);
   };
   
   const lowCarbs = (cart) => {
-    const entries = Object.entries(cart);
-    const lowCarbEntries = filterEntries(entries, ([item, grams]) => {
+    return filterEntries(cart, ([item, grams]) => {
       return (nutritionDB[item].carbs * grams / 100) < 50;
     });
-    return Object.fromEntries(lowCarbEntries);
   };
   
   const cartTotal = (cart) => {
-    const entries = Object.entries(cart);
-    const totalEntries = mapEntries(entries, ([item, grams]) => {
+    return mapEntries(cart, ([item, grams]) => {
       const itemStats = Object.entries(nutritionDB[item]).reduce((acc, [stat, value]) => {
-        acc[stat] = (value * grams / 100);
+        acc[stat] = +(value * grams / 100).toFixed(2);
         return acc;
       }, {});
       return [item, itemStats];
     });
-    return Object.fromEntries(totalEntries);
   };
-  
 //   const groceriesCart = { orange: 500, oil: 20, sugar: 480 };
   
 //   console.log('Total calories:');
