@@ -17,10 +17,12 @@ const filterEntries = (obj, predicate) => {
   
   
   const totalCalories = (cart) => {
-    return reduceEntries(cart, (total, [item, grams]) => {
-      return (total + (nutritionDB[item].calories * grams / 100)).toFixed(1);
+    const total = reduceEntries(cart, (total, [item, grams]) => {
+      return total + (nutritionDB[item].calories * grams / 100);
     }, 0);
+    return Number(total.toFixed(1)); 
   };
+  
   
   const lowCarbs = (cart) => {
     return filterEntries(cart, ([item, grams]) => {
