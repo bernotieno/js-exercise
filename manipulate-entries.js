@@ -18,7 +18,7 @@ const filterEntries = (obj, predicate) => {
   
   const totalCalories = (cart) => {
     return reduceEntries(cart, (total, [item, grams]) => {
-      return total + (nutritionDB[item].calories * grams / 100);
+      return parseFloat(total + (nutritionDB[item].calories * grams / 100).toFixed(1));
     }, 0);
   };
   
