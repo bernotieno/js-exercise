@@ -4,7 +4,7 @@ function pronoun(str) {
   
     const lowercaseStr = str.toLowerCase();
   
-    const words = lowercaseStr.split(/\s+/);
+    const words = lowercaseStr.match(/\b\w+\b/g);
   
     for (let i = 0; i < words.length; i++) {
       const word = words[i];
