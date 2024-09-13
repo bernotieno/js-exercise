@@ -1,18 +1,13 @@
 function interpolation({ step, start, end, callback, duration }) {
-  const stepSize = (end - start) / (step - 1);
-  const timeStep = duration / (step - 1);
+  const stepSize = (end - start) / step;
+  const timeStep = duration / step;
 
-  function scheduleCallback(i) {
-    if (i >= step) return; // Stop recursion when all steps are handled
-
-    const distance = start + stepSize * i;
-    const point = timeStep * i;
+  for (i=1; i<=step;i++){
+    const distance = Number((start + stepSize * i-1).toFixed(2));
+    const point = Number((timeStep * i).toFixed(2));
 
     setTimeout(() => {
       callback([distance, point]);
-      scheduleCallback(i + 1); // Schedule the next step
-    }, point); // Delay based on `point`
+    }, point);
   }
-
-  scheduleCallback(0); // Start the recursion at index 0
 }
