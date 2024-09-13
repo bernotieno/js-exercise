@@ -3,17 +3,19 @@ function interpolation({ step, start, end, callback, duration }) {
     const timeStep = duration / step;
   
     function runStep(i) {
-      if (i >= step) return;
+      if (i > step) return;
   
-      const distance = start + stepSize * (i + 1);
-      const point = timeStep * (i + 1);
-      
+      const distance = start + stepSize * i;
+      const point = timeStep * i;
+  
       setTimeout(() => {
         callback([distance, point]);
-        runStep(i + 1); // Recursively call the next step
+  
+        // Recursively go to the next step
+        runStep(i + 1);
       }, point);
     }
   
-    runStep(0); // Start the process
+    runStep(1);
   }
   
