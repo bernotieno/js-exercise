@@ -24,22 +24,23 @@ function opThrottle(func, wait, options = {}) {
   const leading = options.leading !== false;
   const trailing = options.trailing !== false;
 
-  function invoke() {
+  function invoke(thisArg, args) {
     lastCall = Date.now();
-    lastResult = func.apply(this, lastArgs);
+    lastResult = func.apply(thisArg, args);
     lastArgs = null;
   }
 
   function trailingCall() {
     if (trailing && lastArgs) {
-      invoke();
+      invoke(this, lastArgs);
     }
     isThrottled = false;
     timeout = null;
   }
 
-  return function (...args) {
+  return function throttled(...args) {
     const now = Date.now();
+    const callNow = leading && !isThrottled;
 
     if (!lastCall && !leading) {
       lastCall = now;
@@ -47,18 +48,16 @@ function opThrottle(func, wait, options = {}) {
 
     const remaining = wait - (now - lastCall);
 
-    if (!isThrottled && (remaining <= 0 || remaining > wait)) {
+    if (callNow || remaining <= 0) {
       if (timeout) {
         clearTimeout(timeout);
         timeout = null;
       }
-      invoke();
+      invoke(this, args);
       isThrottled = true;
-    } else {
+    } else if (!timeout && trailing) {
       lastArgs = args;
-      if (!timeout && trailing) {
-        timeout = setTimeout(trailingCall, remaining);
-      }
+      timeout = setTimeout(trailingCall.bind(this), remaining);
     }
 
     return lastResult;
