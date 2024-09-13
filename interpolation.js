@@ -3,7 +3,7 @@ function interpolation({ step, start, end, callback, duration }) {
   const timeStep = duration / (step - 1);
 
   function scheduleCallback(i) {
-    if (i > step) return; // Stop recursion when all steps are handled
+    if (i >= step) return; // Stop recursion when all steps are handled
 
     const distance = start + stepSize * i;
     const point = timeStep * i;
@@ -14,5 +14,5 @@ function interpolation({ step, start, end, callback, duration }) {
     }, point); // Delay based on `point`
   }
 
-  scheduleCallback(1); // Start the recursion
+  scheduleCallback(0); // Start the recursion at index 0
 }
