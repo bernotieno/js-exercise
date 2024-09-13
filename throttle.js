@@ -1,73 +1,37 @@
-function throttle(func, wait) {
-  let lastCall = 0;
+function throttle(func, delay) {
   let timeout = null;
 
-  return function throttled(...args) {
-    const now = Date.now();
-    const remaining = wait - (now - lastCall);
-
-    if (remaining <= 0 || remaining > wait) {
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
-      }
-      lastCall = now;
-      func.apply(this, args);
-    } else if (!timeout) {
+  return (...args) =>{
+    if (!timeout) {
+      func.call(this, ...args)
       timeout = setTimeout(() => {
-        lastCall = Date.now();
         timeout = null;
-        func.apply(this, args);
-      }, remaining);
+      }, delay);
     }
   };
 }
 
-function opThrottle(func, wait, options = {}) {
+function opThrottle(func, delay, options = {}) {
   let lastCall = 0;
   let timeout = null;
   let lastArgs = null;
-  let result;
 
-  const leading = options.leading !== false;
-  const trailing = options.trailing !== false;
-
-  function invoke(thisArg, args) {
-    lastCall = Date.now();
-    result = func.apply(thisArg, args);
-    lastArgs = null;
-  }
-
-  function trailingCall() {
-    if (trailing && lastArgs) {
-      invoke(this, lastArgs);
-    }
-  }
-
-  return function throttled(...args) {
+  return (...args) => {
     const now = Date.now();
-    const remaining = wait - (now - lastCall);
-
-    if (!lastCall && !leading) {
-      lastCall = now;
+    lastArgs = args
+    if (!timeout && options.leading && now -lastCall >= delay) {
+      func.apply(this, args)
+      lastCall = now
     }
-
-    if (remaining <= 0 || remaining > wait) {
-      if (timeout) {
-        clearTimeout(timeout);
-        timeout = null;
+    if (!timeout) {
+      timeout = setTimeout(() => {
+        if (options.trailing && lastArgs) {
+          func.apply(this, latest)
+          lastCall = Date.now()
+        }
+        timeout = null
+      }, delay )
       }
-      invoke(this, args);
-    } else {
-      lastArgs = args;
-      if (!timeout && trailing) {
-        timeout = setTimeout(() => {
-          trailingCall.call(this);
-          timeout = null;
-        }, remaining);
-      }
-    }
+  }
 
-    return result;
-  };
-}
+ };
