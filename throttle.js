@@ -1,32 +1,40 @@
-// Basic throttle function
 function throttle(func, wait) {
   let lastCall = 0;
-  let lastResult;
+  let timeout = null;
 
-  return function (...args) {
+  return function throttled(...args) {
     const now = Date.now();
-    if (now - lastCall >= wait) {
+    const remaining = wait - (now - lastCall);
+
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
       lastCall = now;
-      lastResult = func.apply(this, args);
+      func.apply(this, args);
+    } else if (!timeout) {
+      timeout = setTimeout(() => {
+        lastCall = Date.now();
+        timeout = null;
+        func.apply(this, args);
+      }, remaining);
     }
-    return lastResult;
   };
 }
 
-// Throttle function with trailing and leading options
 function opThrottle(func, wait, options = {}) {
-  let timeout = null;
   let lastCall = 0;
+  let timeout = null;
   let lastArgs = null;
-  let lastResult;
-  let isThrottled = false;
+  let result;
 
   const leading = options.leading !== false;
   const trailing = options.trailing !== false;
 
   function invoke(thisArg, args) {
     lastCall = Date.now();
-    lastResult = func.apply(thisArg, args);
+    result = func.apply(thisArg, args);
     lastArgs = null;
   }
 
@@ -34,32 +42,32 @@ function opThrottle(func, wait, options = {}) {
     if (trailing && lastArgs) {
       invoke(this, lastArgs);
     }
-    isThrottled = false;
-    timeout = null;
   }
 
   return function throttled(...args) {
     const now = Date.now();
-    const callNow = leading && !isThrottled;
+    const remaining = wait - (now - lastCall);
 
     if (!lastCall && !leading) {
       lastCall = now;
     }
 
-    const remaining = wait - (now - lastCall);
-
-    if (callNow || remaining <= 0) {
+    if (remaining <= 0 || remaining > wait) {
       if (timeout) {
         clearTimeout(timeout);
         timeout = null;
       }
       invoke(this, args);
-      isThrottled = true;
-    } else if (!timeout && trailing) {
+    } else {
       lastArgs = args;
-      timeout = setTimeout(trailingCall.bind(this), remaining);
+      if (!timeout && trailing) {
+        timeout = setTimeout(() => {
+          trailingCall.call(this);
+          timeout = null;
+        }, remaining);
+      }
     }
 
-    return lastResult;
+    return result;
   };
 }
