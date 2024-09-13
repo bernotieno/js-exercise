@@ -1,7 +1,7 @@
 const retry = (count, callback) => {
     return async (...args) => {
       let attempts = 0;
-      while (true) {
+      while (attempts <= count) {
         try {
           return await callback(...args);
         } catch (error) {
