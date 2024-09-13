@@ -14,5 +14,5 @@ function interpolation({ step, start, end, callback, duration }) {
     }, point); // Delay based on `point`
   }
 
-  scheduleCallback(0); // Start the recursion
+  scheduleCallback(1); // Start the recursion
 }
