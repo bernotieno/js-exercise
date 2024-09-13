@@ -1,6 +1,3 @@
-const fetch = require('node-fetch'); // Import node-fetch
-
-
 async function getJSON(path, params = {}) {
     try {
         const baseUrl = 'http://example.com'; 
