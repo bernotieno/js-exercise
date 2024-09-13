@@ -1,6 +1,10 @@
+const fetch = require('node-fetch'); // Import node-fetch
+
+
 async function getJSON(path, params = {}) {
     try {
-        const url = new URL(path);
+        const baseUrl = 'http://example.com'; 
+        const url = new URL(path, baseUrl);
         url.search = new URLSearchParams(params).toString();
 
         const response = await fetch(url);
@@ -20,3 +24,5 @@ async function getJSON(path, params = {}) {
         throw error;
     }
 }
+
+console.log(getJSON('/test', { query: 'hello world', b: 5 }))
