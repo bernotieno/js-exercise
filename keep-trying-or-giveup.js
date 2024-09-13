@@ -7,7 +7,7 @@ const retry = (count, callback) => {
         } catch (error) {
           attempts++;
           if (attempts > count) {
-            throw new Error(`Failed after ${count} retries: ${error.message}`);
+            throw new Error(`${error.message}`);
           }
         }
       }
