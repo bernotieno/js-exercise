@@ -2,17 +2,18 @@ function interpolation({ step, start, end, callback, duration }) {
     const stepSize = (end - start) / step;
     const timeStep = duration / step;
   
-    // console.log(`Interpolation called with step: ${step}, start: ${start}, end: ${end}, duration: ${duration}`);
+    function runStep(i) {
+      if (i >= step) return;
   
-    for (let i = 0; i < step; i++) {
-      const distance = start + stepSize * i;
-      const point = timeStep * i;
+      const distance = start + stepSize * (i + 1);
+      const point = timeStep * (i + 1);
       
       setTimeout(() => {
-        // console.log(`Executing callback at ${Date.now()}: [${distance}, ${point}]`);
         callback([distance, point]);
+        runStep(i + 1); // Recursively call the next step
       }, point);
     }
   
-    // console.log('All callbacks scheduled');
+    runStep(0); // Start the process
   }
+  
