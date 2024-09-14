@@ -1,7 +1,7 @@
 async function queryServers(serverName, q) {
     const urls = [
-      `//${serverName}?q=${q}`,
-      `//${serverName}_backup?q=${q}`
+      `/${serverName}?q=${q}`,
+      `/${serverName}_backup?q=${q}`
     ];
   
     return Promise.race(urls.map(url => getJSON(url)));
