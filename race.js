@@ -21,7 +21,7 @@ function race(promises) {
         return;
       }
   
-      const results = [];
+      const results = new Array(promises.length); // Ensure order is preserved
       let resolved = 0;
       let completed = 0;
   
@@ -29,15 +29,15 @@ function race(promises) {
         Promise.resolve(promise)
           .then(value => {
             if (resolved < count) {
-              results[index] = value;
+              results[index] = value; // Fill results in the same order as promises
               resolved++;
               if (resolved === count) {
-                resolve(results.filter(result => result !== undefined));
+                resolve(results.filter(result => result !== undefined)); // Only return the needed results
               }
             }
             completed++;
             if (completed === promises.length && resolved < count) {
-              resolve(results.filter(result => result !== undefined));
+              resolve(results.filter(result => result !== undefined)); // Ensure we resolve with what we have
             }
           })
           .catch(() => {
@@ -49,3 +49,4 @@ function race(promises) {
       });
     });
   }
+  
