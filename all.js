@@ -1,7 +1,10 @@
 function all(obj) {
     // Get the entries (key-value pairs) of the object
     const entries = Object.entries(obj);
-    
+  
+    // If there are no entries, return an empty object immediately
+    if (entries.length === 0) return Promise.resolve({});
+  
     // Create an array of promises, each resolving to [key, value]
     const promises = entries.map(([key, value]) => 
       Promise.resolve(value).then(resolvedValue => [key, resolvedValue])
@@ -13,3 +16,4 @@ function all(obj) {
       Object.fromEntries(resolvedEntries)
     );
   }
+  
